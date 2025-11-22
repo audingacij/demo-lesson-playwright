@@ -1,6 +1,5 @@
 import { Locator, Page } from '@playwright/test'
 
-
 export class OrderPage {
   readonly page: Page
   readonly statusButton: Locator
@@ -11,7 +10,6 @@ export class OrderPage {
   readonly mainPageLink: Locator
   readonly orderCreatedButton: Locator
   readonly logoutButton: Locator
-
 
   // add more locators here
 

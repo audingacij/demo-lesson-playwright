@@ -2,7 +2,6 @@ import { Locator, Page } from '@playwright/test'
 import { OrderPage } from './order-page'
 import { SERVICE_URL } from '../../config/env-data'
 
-
 export class LoginPage {
   readonly page: Page
   readonly url = SERVICE_URL
