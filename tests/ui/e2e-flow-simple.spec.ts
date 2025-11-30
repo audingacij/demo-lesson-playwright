@@ -105,7 +105,7 @@ test('Verify order found page', async ({ page }) => {
   await authPage.open()
   const orderCreationPage = await authPage.signIn(USERNAME, PASSWORD)
   await orderCreationPage.statusButton.click()
-  await orderCreationPage.searchOrderInput.fill('13495')
+  await orderCreationPage.searchOrderInput.fill('13629')
   await orderCreationPage.searchOrderSubmitButton.click()
   const orderFound = new OrderFound(page)
   await expect(orderFound.statusListItem).toBeVisible()
