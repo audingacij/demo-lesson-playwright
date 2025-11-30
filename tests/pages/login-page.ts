@@ -4,7 +4,7 @@ import { SERVICE_URL } from '../../config/env-data'
 
 export class LoginPage {
   readonly page: Page
-  readonly url: string = SERVICE_URL
+  readonly url = SERVICE_URL
   readonly signInButton: Locator
   readonly usernameField: Locator
   readonly passwordField: Locator
