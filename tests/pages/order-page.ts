@@ -1,6 +1,7 @@
 import { Locator, Page } from '@playwright/test'
+import { BasePage } from './base-page'
 
-export class OrderPage {
+export class OrderPage extends BasePage {
   readonly page: Page
   readonly statusButton: Locator
   readonly userNameField: Locator
@@ -10,11 +11,13 @@ export class OrderPage {
   readonly mainPageLink: Locator
   readonly orderCreatedButton: Locator
   readonly logoutButton: Locator
+  readonly searchOrderInput: Locator
+  readonly searchOrderSubmitButton: Locator
 
   // add more locators here
 
   constructor(page: Page) {
-    this.page = page
+    super(page)
     this.statusButton = page.getByTestId('openStatusPopup-button')
     this.userNameField = page.getByTestId('username-input')
     this.phoneNumber = page.getByTestId('phone-input')
@@ -23,5 +26,7 @@ export class OrderPage {
     this.mainPageLink = page.getByTestId('mainPage-link')
     this.orderCreatedButton = page.getByTestId('orderSuccessfullyCreated-popup-ok-button')
     this.logoutButton = page.getByTestId('logout-button')
+    this.searchOrderInput = page.getByTestId('searchOrder-input')
+    this.searchOrderSubmitButton = page.getByTestId('searchOrder-submitButton')
   }
 }
