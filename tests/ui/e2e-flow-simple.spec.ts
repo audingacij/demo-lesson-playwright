@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test'
 import { LoginPage } from '../pages/login-page'
 import { faker } from '@faker-js/faker'
 import { PASSWORD, USERNAME } from '../../config/env-data'
+import { OrderNotFoundPage } from '../pages/order-not-found-page'
+import { OrderFound } from '../pages/order-found-page'
 
 test('signIn button disabled when incorrect data inserted', async ({ page }) => {
   const authPage = new LoginPage(page)
@@ -71,4 +73,41 @@ test('login and verify order can not be created with 5 symbols in the Phone fiel
   await orderCreationPage.phoneNumber.fill(faker.lorem.word(5))
   await expect(orderCreationPage.orderButton).toBeDisabled()
   await expect(page.getByText('The field must contain at least of characters: 6')).toBeVisible()
+})
+
+test('verify language toggle is visible', async ({ page }) => {
+  const authPage = new LoginPage(page)
+  await authPage.open()
+  await authPage.verifyLanguageSelector()
+})
+
+test('login and verify policy links in the footer', async ({ page }) => {
+  const authPage = new LoginPage(page)
+  await authPage.open()
+  const orderCreationPage = await authPage.signIn(USERNAME, PASSWORD)
+  await orderCreationPage.verifyPolicyLinksInFooter()
+})
+
+test('Verify order not found page', async ({ page }) => {
+  const authPage = new LoginPage(page)
+  await authPage.open()
+  const orderCreationPage = await authPage.signIn(USERNAME, PASSWORD)
+  await orderCreationPage.statusButton.click()
+  await orderCreationPage.searchOrderInput.fill('9999999')
+  await orderCreationPage.searchOrderSubmitButton.click()
+  const orderNotFound = new OrderNotFoundPage(page)
+  await expect(orderNotFound.orderNotFoundTitle).toBeVisible()
+  await orderNotFound.verifyPolicyLinksInFooter()
+})
+
+test('Verify order found page', async ({ page }) => {
+  const authPage = new LoginPage(page)
+  await authPage.open()
+  const orderCreationPage = await authPage.signIn(USERNAME, PASSWORD)
+  await orderCreationPage.statusButton.click()
+  await orderCreationPage.searchOrderInput.fill('13495')
+  await orderCreationPage.searchOrderSubmitButton.click()
+  const orderFound = new OrderFound(page)
+  await expect(orderFound.statusListItem).toBeVisible()
+  await orderFound.verifyPolicyLinksInFooter()
 })
